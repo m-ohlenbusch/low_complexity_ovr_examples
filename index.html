@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Efficient own voice reconstruction for hearables with an in-ear microphone</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+<div>
+<h1>
+Efficient own voice reconstruction for hearables with an in-ear microphone</h1>
+<p>
+Mattes Ohlenbusch, Christian Rollwage, Simon Doclo
+</p>
+
+<h2>Abstract</h2>
+<p>
+Hearables equipped with one or more microphones are commonly used for speech communication. 
+Here, we consider the scenario where the hearable is used to capture the user’s own voice in a noisy environment (e.g., to be transmitted via a wireless link to another hearable or a mobile phone). 
+In this scenario, own voice reconstruction (OVR) systems are essential to enhance the quality and intelligibility of the recorded noisy own voice signals. 
+In previous work, we developed a deep learning-based OVR system, aiming to reduce the amount of device-specific recordings for training by using data augmentation with phoneme-dependent models of own voice transfer characteristics. 
+Given the limited computational resources available on hearables, in this contribution we propose a low-complexity OVR system and investigate the required amount of device-specific recordings for effective data augmentation and fine-tuning. 
+Simulation results show that the proposed OVR system considerably improves speech quality, even under constraints of low complexity and a limited amount of device-specific recordings.</p>
+</div>
+
+<h2>Links</h2>
+<p>
+Dataset of German own voice recordings: <a href="https://doi.org/10.5281/zenodo.10844599">https://doi.org/10.5281/zenodo.10844599</a>
+</p>
+
+<p>
+Transfer function measurements for simulating environmental noise at hearable microphones: <a href="https://doi.org/10.5281/zenodo.11196867">https://doi.org/10.5281/zenodo.11196867</a> 
+</p>
+
+<h2>Results</h2>
+
+<table>
+    <caption>
+	Performance, size and complexity of the baseline systems and the proposed FT-JNF variants (XL, L, M, S, XS). 
+    'M' indicates millions, and 'G' indicates billions. 
+    Rows with a gray background indicate systems using only the in-ear microphone.
+	</caption>
+    <thead>
+        <tr>
+            <th></th>
+            <th colspan="3">Intrusive metrics</th>
+            <th colspan="3">Size and complexity</th>
+        </tr>
+        <tr class="headrow">
+            <th>System</th>
+            <th>PESQ</th>
+            <th>ESTOI</th>
+            <th>LSD</th>
+            <th>Param.</th>
+            <th>MACs/s</th>
+            <th>RTF</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Unprocessed</td>
+            <td>1.25</td>
+            <td>0.51</td>
+            <td>2.46</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr class="gray">
+            <td>UNet (IM)</td>
+            <td>1.85</td>
+            <td>0.65</td>
+            <td>1.30</td>
+            <td>10.278 M</td>
+            <td>6.03 G</td>
+            <td>0.157</td>
+        </tr>
+        <tr class="gray">
+            <td>EBEN (IM)</td>
+            <td>1.51</td>
+            <td>0.57</td>
+            <td>1.64</td>
+            <td>1.946 M</td>
+            <td>1.02 G</td>
+            <td>0.034</td>
+        </tr>
+        <tr class="gray">
+            <td>FT-JNF XL (IM)</td>
+            <td>1.47</td>
+            <td>0.61</td>
+            <td>1.73</td>
+            <td>1.390 M</td>
+            <td>22.38 G</td>
+            <td>0.387</td>
+        </tr>
+        <tr>
+            <td>GCBFSNet</td>
+            <td>1.93</td>
+            <td>0.68</td>
+            <td>1.36</td>
+            <td>0.100 M</td>
+            <td>0.31 G</td>
+            <td>0.303</td>
+        </tr>
+        <tr>
+            <td>FT-JNF XL</td>
+            <td>2.58</td>
+            <td>0.78</td>
+            <td>1.08</td>
+            <td>1.390 M</td>
+            <td>22.45 G</td>
+            <td>0.392</td>
+        </tr>
+        <tr>
+            <td>FT-JNF L</td>
+            <td>2.50</td>
+            <td>0.77</td>
+            <td>1.10</td>
+            <td>0.466 M</td>
+            <td>7.55 G</td>
+            <td>0.173</td>
+        </tr>
+        <tr>
+            <td>FT-JNF M</td>
+            <td>2.22</td>
+            <td>0.72</td>
+            <td>1.27</td>
+            <td>0.118 M</td>
+            <td>1.93 G</td>
+            <td>0.071</td>
+        </tr>
+        <tr>
+            <td>FT-JNF S</td>
+            <td>2.18</td>
+            <td>0.72</td>
+            <td>1.28</td>
+            <td>0.031 M</td>
+            <td>0.50 G</td>
+            <td>0.029</td>
+        </tr>
+		<tr>
+            <td>FT-JNF XS</td>
+            <td>1.95</td>
+            <td>0.69</td>
+            <td>1.40</td>
+            <td>0.013 M</td>
+            <td>0.23 G</td>
+            <td>0.011</td>
+        </tr>
+    </tbody>
+</table>
+
+<figure>
+	<img src="lineplot_lowresource_PESQ.png" alt="PESQ Improvement">
+	<figcaption>
+	PESQ improvement of the baseline systems and the proposed FT-JNF variants for different amounts of device-specific recordings (talkers, utterances). 
+    The baseline results are obtained using recordings from 12 talkers with 306 utterances each. 
+	</figcaption>
+</figure>
+
+<h2>Audio Examples (recorded pseudo-diffuse surgery noise at 5 dB SNR)</h2>
+<!-- Please note that the files are named different than their labels, this is due to changes in the variant naming after computing the example files. (old scheme/files "L" -> new scheme/label "XL" and so on) -->
+<table>
+
+<tr class="headrow"> 
+<td>
+System
+</td>
+<td>
+Audio example
+</td>
+</tr>
+
+<tr> 
+<td>
+Clean outer microphone
+</td>
+<td>
+<audio controls="controls"><source src="clean_reference_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+Noisy outer microphone
+</td>
+<td>
+<audio controls="controls"><source src="noisy_anchor_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+Noisy in-ear microphone
+</td>
+<td>
+<audio controls="controls"><source src="noisy_inear_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr class="gray"> 
+<td>
+EBEN
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_eben_gen_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr class="gray"> 
+<td>
+UNet
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_aecnn_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+GCBFSNet<sub>uni</sub>
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_gcbfs_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF XL
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF X
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_M_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF M
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_S_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF S
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_XS_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF XS
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_XXS_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF XL (3 talkers)
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_3T_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF XL (25 utterances)
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_utt25_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF S (3 talkers)
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_XS_3T_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<tr> 
+<td>
+FT-JNF S (25 utterances)
+</td>
+<td>
+<audio controls="controls"><source src="output_cvde_phone_finetune_full_XS_25utt_1.wav" type="audio/x-wav" /></audio>
+</td>
+</tr>
+
+<table>
