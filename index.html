@@ -3,7 +3,7 @@
 <html lang="en-US">
 <head>
 <meta charset="UTF-8">
-<title>Efficient own voice reconstruction for hearables with an in-ear microphone</title>
+<title>Low Complexity Own Voice Reconstruction for Hearables with an In-ear Microphone</title>
 <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -11,18 +11,18 @@
 
 <div>
 <h1>
-Efficient own voice reconstruction for hearables with an in-ear microphone</h1>
+Low Complexity Own Voice Reconstruction for Hearables with an In-ear Microphone</h1>
 <p>
 Mattes Ohlenbusch, Christian Rollwage, Simon Doclo
 </p>
 
 <h2>Abstract</h2>
 <p>
-Hearables equipped with one or more microphones are commonly used for speech communication. 
-Here, we consider the scenario where the hearable is used to capture the user’s own voice in a noisy environment (e.g., to be transmitted via a wireless link to another hearable or a mobile phone). 
-In this scenario, own voice reconstruction (OVR) systems are essential to enhance the quality and intelligibility of the recorded noisy own voice signals. 
+Hearable devices, equipped with one or more microphones, are commonly used for speech communication. 
+Here, we consider the scenario where a hearable is used to capture the user’s own voice in a noisy environment. 
+In this scenario, own voice reconstruction (OVR) is essential for enhancing the quality and intelligibility of the recorded noisy own voice signals. 
 In previous work, we developed a deep learning-based OVR system, aiming to reduce the amount of device-specific recordings for training by using data augmentation with phoneme-dependent models of own voice transfer characteristics. 
-Given the limited computational resources available on hearables, in this contribution we propose a low-complexity OVR system and investigate the required amount of device-specific recordings for effective data augmentation and fine-tuning. 
+Given the limited computational resources available on hearables, in this paper we propose low-complexity variants of an OVR system based on the FT-JNF architecture and investigate the required amount of device-specific recordings for effective data augmentation and fine-tuning. 
 Simulation results show that the proposed OVR system considerably improves speech quality, even under constraints of low complexity and a limited amount of device-specific recordings.</p>
 </div>
 
@@ -157,7 +157,7 @@ Transfer function measurements for simulating environmental noise at hearable mi
 	<img src="lineplot_lowresource_PESQ.png" alt="PESQ Improvement">
 	<figcaption>
 	PESQ improvement of the baseline systems and the proposed FT-JNF variants for different amounts of device-specific recordings (talkers, utterances). 
-    The baseline results are obtained using recordings from 12 talkers with 306 utterances each. 
+	Different systems are distinguished by different symbols, while different amounts of recordings are represented by different colors.
 	</figcaption>
 </figure>
 
